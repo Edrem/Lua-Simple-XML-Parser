@@ -51,8 +51,13 @@ function newParser()
     end
 
     function XmlParser:ParseArgs(node, s)
-        string.gsub(s, "(%w+)=([\"'])(.-)%2", function(w, _, a)
+        r = string.gsub(s, "([%w%-]+)=([\"'])(.-)%2", function(w, _, a)
             node:addProperty(w, self:FromXmlString(a))
+            return ""
+        end)
+        string.gsub(r, "([%w%-]+)", function(w, _, a)
+            print(r)
+            node:addProperty(w, w)
         end)
     end
 
